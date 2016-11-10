@@ -7,6 +7,7 @@
 #
 #####Step 2 will be to read values out to a .txt file where they can be plotted from. real master flats are darks will need to be incorporated first. for now it works for what it needs to do and plotting can come later.
 
+#####edit 11/9 Darks and flat subtracts are now done beforehand
 #########################################################################
 import numpy as np
 import sep
