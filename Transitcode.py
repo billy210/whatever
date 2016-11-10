@@ -38,15 +38,6 @@ for i in range(len(flist)):
      step2 = fits.open(step1)
      #align1 = step2[0].data 
      data_sub = step2[0].data   
-     ###############inptarray.append(step3)
-
-     #alignd=fits.open('dark_2s_-001.fit')
-     #dark=alignd[0].data
-
-     #alignf=fits.open('masterflat.fits')
-     #flat=alignf[0].data
-
-     #data_sub=((align1-dark)/flat)
 
      ####objects = sep.extract(data_sub, 1.5, err=bkg.globalrms)
      sep.set_extract_pixstack(5000000) 
