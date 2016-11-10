@@ -30,12 +30,14 @@ print flist
 
 #creates an empty file to fill with opened input data
 inptarray=[]
+jd = np.zeros(len(flist))
 f= open('fluxout.txt','w')
 #Open the images given at the command line and place them in an array
 for i in range(len(flist)): 
      step1 = flist[i]  
      step2 = fits.open(step1)
      #align1 = step2[0].data 
+     jd[i]=step2[0].header['JD']
      data_sub = step2[0].data   
      ###############inptarray.append(step3)
 
@@ -48,9 +50,9 @@ for i in range(len(flist)):
      #data_sub=((align1-dark)/flat)
 
      ####objects = sep.extract(data_sub, 1.5, err=bkg.globalrms)
-     sep.set_extract_pixstack(5000000) 
+     sep.set_extract_pixstack(50000) 
      data_sub = data_sub.byteswap().newbyteorder()
-     objects = sep.extract(data_sub, 2000)
+     objects = sep.extract(data_sub, 3000)
 
      # how many objects were detected
      len(objects)
@@ -62,17 +64,17 @@ for i in range(len(flist)):
                     vmin=m-s, vmax=m+s, origin='lower')
 
      # plot an ellipse for each object
- #    for i in range(len(objects)):
      for i in range(len(objects)):
+     #for i in range(1):
          e = Ellipse(xy=(objects['x'][i], objects['y'][i]),
-                     width=6*objects['a'][i],
-                     height=6*objects['b'][i],
+                     width=7*objects['a'][i],
+                     height=7*objects['b'][i],
                      angle=objects['theta'][i] * 180. / np.pi)
          e.set_facecolor('none')
          e.set_edgecolor('red')
          ax.add_artist(e)
-         #pl.draw()
-         #pl.show()
+         pl.draw()
+         pl.show()
 
          # available fields
          #print objects.dtype.names
@@ -82,11 +84,12 @@ for i in range(len(flist)):
          xval= objects['x']
          yval= objects['y']
 
-         #print objects['x'], objects['y'] 
-         for j in range(len(objects)):
+ 
+         #for j in range(len(objects)):
+         for j in range(1):
              print("object {:d}: flux = {:f} {:f}".format(j, flux[j], fluxerr[j], xval[j], yval[j]))
 
-             outline="%s %s %s\n"%(j,flux[j],fluxerr[j])
+             outline="%s %s %s %s\n"%(j,jd[1],flux[j],fluxerr[j])
              f.write(outline)
 f.close()
 #before loop
