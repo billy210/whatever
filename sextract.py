@@ -30,7 +30,7 @@ print flist
 
 #creates an empty file to fill with opened input data
 inptarray=[]
-
+f= open('fluxout.txt','w')
 #Open the images given at the command line and place them in an array
 for i in range(len(flist)): 
      step1 = flist[i]  
@@ -86,7 +86,9 @@ for i in range(len(flist)):
          for j in range(len(objects)):
              print("object {:d}: flux = {:f} {:f}".format(j, flux[j], fluxerr[j], xval[j], yval[j]))
 
-
+             outline="%s %s %s\n"%(j,flux[j],fluxerr[j])
+             f.write(outline)
+f.close()
 #before loop
 #f=file.open('fluxout.txt,'w')
 
