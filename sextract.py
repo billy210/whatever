@@ -64,17 +64,17 @@ for i in range(len(flist)):
                     vmin=m-s, vmax=m+s, origin='lower')
 
      # plot an ellipse for each object
-     for i in range(len(objects)):
+     for j in range(len(objects)):
      #for i in range(1):
-         e = Ellipse(xy=(objects['x'][i], objects['y'][i]),
-                     width=7*objects['a'][i],
-                     height=7*objects['b'][i],
-                     angle=objects['theta'][i] * 180. / np.pi)
+         e = Ellipse(xy=(objects['x'][j], objects['y'][j]),
+                     width=7*objects['a'][j],
+                     height=7*objects['b'][j],
+                     angle=objects['theta'][j] * 180. / np.pi)
          e.set_facecolor('none')
          e.set_edgecolor('red')
          ax.add_artist(e)
-         pl.draw()
-         pl.show()
+         #pl.draw()
+         #pl.show()
 
          # available fields
          #print objects.dtype.names
@@ -86,11 +86,12 @@ for i in range(len(flist)):
 
  
          #for j in range(len(objects)):
-         for j in range(1):
+         for k in range(1):
              print("object {:d}: flux = {:f} {:f}".format(j, flux[j], fluxerr[j], xval[j], yval[j]))
-
-             outline="%s %s %s %s\n"%(j,jd[1],flux[j],fluxerr[j])
+	     print(i,jd[i])
+             outline="%s %s %s %s\n"%(j,jd[i],flux[j],fluxerr[j])
              f.write(outline)
+	     step2.close()
 f.close()
 #before loop
 #f=file.open('fluxout.txt,'w')
