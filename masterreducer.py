@@ -30,5 +30,8 @@ for i in range(len(flist)):
 
      data_sub=(step3-dark)/flat
      
-     final=fits.PrimaryHDU(data_sub)
-     final.writeto(flist[i][0:26]+'sub'+str(i)+.fits, header=step2[0].header, clobber='True') 
+     final=fits.PrimaryHDU(data_sub,header=step2[0].header)
+     final.writeto(flist[i][0:26]+'sub'+str(i)+'.fits', clobber='True')
+     step2.close() 
+
+#, header=step2[0].header
