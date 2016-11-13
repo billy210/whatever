@@ -32,6 +32,7 @@ print flist
 inptarray=[]
 jd = np.zeros(len(flist))
 f= open('fluxout.txt','w')
+#f2= open('fluxout2.txt','w')
 #Open the images given at the command line and place them in an array
 for i in range(len(flist)): 
      step1 = flist[i]  
@@ -50,12 +51,12 @@ for i in range(len(flist)):
      #data_sub=((align1-dark)/flat)
 
      ####objects = sep.extract(data_sub, 1.5, err=bkg.globalrms)
-     sep.set_extract_pixstack(50000) 
+     sep.set_extract_pixstack(500000)
      data_sub = data_sub.byteswap().newbyteorder()
-     objects = sep.extract(data_sub, 3000)
+     objects = sep.extract(data_sub, 45, err=10)
 
      # how many objects were detected
-     len(objects)
+     print(len(objects))
 
      # plot background-subtracted image
      fig, ax = plt.subplots()
@@ -65,16 +66,15 @@ for i in range(len(flist)):
 
      # plot an ellipse for each object
      for j in range(len(objects)):
-     #for i in range(1):
+     #for j in range(2):
          e = Ellipse(xy=(objects['x'][j], objects['y'][j]),
-                     width=7*objects['a'][j],
-                     height=7*objects['b'][j],
+                     width=10*objects['a'][j],
+                     height=10*objects['b'][j],
                      angle=objects['theta'][j] * 180. / np.pi)
          e.set_facecolor('none')
          e.set_edgecolor('red')
          ax.add_artist(e)
-         #pl.draw()
-         #pl.show()
+
 
          # available fields
          #print objects.dtype.names
@@ -83,16 +83,33 @@ for i in range(len(flist)):
                                      3.0, gain=1.0)
          xval= objects['x']
          yval= objects['y']
-
- 
-         #for j in range(len(objects)):
+         #pl.draw()
+         #pl.show()
          for k in range(1):
-             print("object {:d}: flux = {:f} {:f}".format(j, flux[j], fluxerr[j], xval[j], yval[j]))
-	     print(i,jd[i])
-             outline="%s %s %s %s\n"%(j,jd[i],flux[j],fluxerr[j])
-             f.write(outline)
-	     step2.close()
+ 	 	print("object {:d}: flux = {:f} +/- {:f}".format(j, flux[j], fluxerr[j], xval[j], yval[j]))
+         #print(i,jd[i])
+         	outline="%s %s %s %s\n"%(j,jd[i],flux[j],fluxerr[j])
+	 #outline2="%s %s %s %s\n"%(2,jd[i],flux[2],fluxerr[2])
+         	f.write(outline)
+         #f2.write(outline2)
+pl.draw()
+pl.show()
+step2.close()
 f.close()
+
+
+
+
+         #for j in range(len(objects)):
+         ##for k in range(2):
+             ##print("object {:d}: flux = {:f} {:f}".format(j, flux[j], fluxerr[j], xval[j], yval[j]))
+	     ##print(i,jd[i])
+             ##outline="%s %s %s %s\n"%(j,jd[i],flux[j],fluxerr[j])
+	     #outline2="%s %s %s %s\n"%(2,jd[i],flux[2],fluxerr[2])
+             ##f.write(outline)
+             #f2.write(outline2)
+	     ##step2.close()
+##f.close()
 #before loop
 #f=file.open('fluxout.txt,'w')
 
